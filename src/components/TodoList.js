@@ -1,14 +1,20 @@
 import React from 'react';
-import TodoItem from './TodoItem'
+import TodoItem from './TodoItem';
+import PropTypes from 'prop-types'
 
-function Todolist(props) {
+function TodoList(props) {
 
     return (
         <ul>
-          { props.todos.map(todo => {
-                return <TodoItem todo={todo} key={todo.id} />
+          { props.todos.map((todo, index) => {
+                return <TodoItem todo={todo} key={todo.id} index={index} />
           })}
         </ul>
     )
 }
-export default Todolist;
+TodoList.propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+
+export default TodoList;
