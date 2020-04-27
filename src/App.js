@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoList from './components/TodoList';
 import './App.css';
 import Context from './components/context';
 import AddTodo from './components/AddTodo';
+import Loader from './components/loader';
 
 function App() {
-    const [todos, setTodos] = useState([
-        {id: 1, complete: false, title: "Приготовить ужин"},
-        {id: 2, complete: false, title: "Помыть машину"},
-        {id: 3, complete: true, title: "Починить пылесос"}
-    ]);
+    const [todos, setTodos] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect( () => {
+        fetch('https://jsonplaceholder.typicode.com/todos?_limit=7')
+            .then(response => response.json())
+            .then(todos => {
+              setTimeout(() => {
+                  setTodos(todos);
+                  setLoading(false);
+              }, 2000);
+            })
+    },[]);
 
     function toggleTodo(id) {
         setTodos(
@@ -37,7 +46,8 @@ function App() {
         <div className="App">
             <h1>Список задач на сегодня</h1>
             <AddTodo onCreate = {addTodo} />
-            { todos.length !==0 ? <TodoList todos={todos} onToggle={toggleTodo} />: <p>Все дела выполнены!</p>}
+            { loading && <Loader /> }
+            { todos.length !==0 ? <TodoList todos={todos} onToggle={toggleTodo} />: loading ? null: <p>Все дела выполнены!</p>}
         </div>
       </Context.Provider>
   );
