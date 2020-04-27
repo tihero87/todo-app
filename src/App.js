@@ -16,6 +16,7 @@ function App() {
               setTimeout(() => {
                   setTodos(todos);
                   setLoading(false);
+                  console.log(todos)
               }, 2000);
             })
     },[]);
@@ -24,7 +25,7 @@ function App() {
         setTodos(
             todos.map(todo => {
                 if(todo.id === id){
-                    todo.complete = !todo.complete;
+                    todo.completed = !todo.completed;
                 }
             return todo
     }))}
@@ -37,7 +38,7 @@ function App() {
         setTodos(todos.concat([{
             title,
             id: Date.now(),
-            complete: false
+            completed: false
         }]))
     }
 

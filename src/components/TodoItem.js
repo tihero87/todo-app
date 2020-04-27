@@ -5,7 +5,7 @@ import Context from './context';
 function TodoItem({todo, index, onChange}) {
     const {delTodo} = useContext(Context);
     const classes = [];
-    if (todo.complete){
+    if (todo.completed){
         classes.push("done");
     }
     const myStyle = {
@@ -17,7 +17,7 @@ function TodoItem({todo, index, onChange}) {
             <input
                 type="checkbox"
                 onChange={() => onChange(todo.id)}
-                checked={todo.complete}
+                checked={todo.completed}
             />
             {index +1} &nbsp; {todo.title}
         </span>
